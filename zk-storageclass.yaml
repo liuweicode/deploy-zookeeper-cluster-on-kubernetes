@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: uat-zookeeper
+parameters:
+  type: cloud_essd
+provisioner: diskplugin.csi.alibabacloud.com
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
