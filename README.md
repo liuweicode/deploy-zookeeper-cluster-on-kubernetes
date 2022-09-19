@@ -25,9 +25,16 @@ Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.1", GitCom
 Server Version: version.Info{Major:"1", Minor:"22+", GitVersion:"v1.22.10-aliyun.1", GitCommit:"890f58821240c8db6e3076942fd574e8820451c5", GitTreeState:"clean", BuildDate:"2022-06-16T07:46:40Z", GoVersion:"go1.16.15", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-## 2. ZooKeeper 存储 
+## 2. 构建镜像
 
-### 2.1 概念
+将官方镜像打包至私有仓库
+
+```shell
+./build.sh
+```
+![build-docker-image](attachments/build-docker-image.png)
+
+## 3. 存储
 
 - **dataDir**：zk用于保存内存数据库的快照的目录，除非设置了dataLogDir，否则这个目录也用来保存更新数据库的事务日志。在生产环境使用的zk集群，强烈建议设置dataLogDir，让dataDir只存放快照，因为写快照的开销很低，这样dataDir就可以和其他日志目录的挂载点放在一起。
 
@@ -39,16 +46,8 @@ Server Version: version.Info{Major:"1", Minor:"22+", GitVersion:"v1.22.10-aliyun
 
 ![data](attachments/data.png)
 
-### 2.2 构建镜像
 
-将官方镜像打包至私有仓库
-
-```shell
-./build.sh
-```
-![build-docker-image](attachments/build-docker-image.png)
-
-### 2.3 创建 StorageClass
+- 创建 StorageClass
 
 我这里使用阿里云云盘做存储
 
@@ -56,13 +55,19 @@ Server Version: version.Info{Major:"1", Minor:"22+", GitVersion:"v1.22.10-aliyun
 kubectl apply -f zk-storageclass.yaml
 ```
 
-## 3. 创建 ZooKeeper StatefulSet
+## 4. 创建ConfigMap
+
+```shell
+kubectl create configmap uat-zookeeper-config --from-file=zoo.cfg  -n uat-zookeeper
+```
+
+## 5. 创建 ZooKeeper StatefulSet
 
 ```shell
 kubectl apply -f zk.yaml
 ```
 
-## 4. 注意事项
+## 6. 注意事项
 
 采用postStart在pod启动的时候，创建myid
 
