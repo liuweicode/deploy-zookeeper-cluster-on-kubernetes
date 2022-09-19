@@ -11,12 +11,6 @@ ZooKeeper 在内存中保存它们的整个状态机，但是每个改变都被�
 
 - Zookeeper 3.7.1
 
-```shell
-docker pull zookeeper:3.7.1
-docker tag xx toplist-registry.cn-shanghai.cr.aliyuncs.com/88/tp-zookeeper:3.7.1
-docker push toplist-registry.cn-shanghai.cr.aliyuncs.com/88/tp-zookeeper:3.7.1
-```
-
 - 阿里云容器服务 ACK
 
 ```
