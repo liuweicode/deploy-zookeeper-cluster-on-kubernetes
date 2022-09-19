@@ -10,6 +10,13 @@ ZooKeeper 在内存中保存它们的整个状态机，但是每个改变都被�
 ## 1. 环境
 
 - Zookeeper 3.7.1
+
+```shell
+docker pull zookeeper:3.7.1
+docker tag xx toplist-registry.cn-shanghai.cr.aliyuncs.com/88/tp-zookeeper:3.7.1
+docker push toplist-registry.cn-shanghai.cr.aliyuncs.com/88/tp-zookeeper:3.7.1
+```
+
 - 阿里云容器服务 ACK
 
 ```
@@ -32,7 +39,16 @@ Server Version: version.Info{Major:"1", Minor:"22+", GitVersion:"v1.22.10-aliyun
 
 ![data](attachments/data.png)
 
-### 2.2 创建 StorageClass
+### 2.2 构建镜像
+
+将官方镜像打包至私有仓库
+
+```shell
+./build.sh
+```
+![build-docker-image](attachments/build-docker-image.png)
+
+### 2.3 创建 StorageClass
 
 我这里使用阿里云云盘做存储
 
